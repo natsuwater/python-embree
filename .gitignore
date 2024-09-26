@@ -1,7 +1,10 @@
 *.c
+*.cpp
 *.egg-info
 *.so
 *~
+embree3.zip
 __pycache__
 build
 dist
+embree3.zip

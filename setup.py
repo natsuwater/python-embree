@@ -1,52 +1,51 @@
 import os
+import shutil
+import subprocess
 
+from Cython.Build import cythonize
+from Cython.Distutils import build_ext
 from setuptools import find_packages, setup
 from setuptools.extension import Extension
-from Cython.Build import cythonize
 
-# the current working directory
-cwd = os.path.abspath(os.path.expanduser(
-    os.path.dirname(__file__)))
+extension_param = dict()
+extension_param.update(
+    name="embreepy.embree",
+    sources=["./src/embreepy/embree.pyx"],
+    libraries=["embree3"],
+    include_dirs=["./embree3/include"],
+    library_dirs=["./embree3/lib"],
+    language="c++",
+)
 
-include = ['/opt/local/include',
-           os.path.expanduser('~/embree/include')]
-library = ['/opt/local/lib',
-           os.path.expanduser('~/embree/lib')]
+if os.name == "posix":
+    extension_param.update(extra_link_args=["-WL,-rpath,$ORIGIN"])
 
-if os.name == 'nt':
-    include = [
-        'c:/Program Files/Intel/Embree3/include',
-        os.path.join(cwd, 'embree3', 'include')]
-    library = [
-        'c:/Program Files/Intel/Embree3/lib',
-        os.path.join(cwd, 'embree3', 'lib')]
+extensions = [Extension(**extension_param)]
 
-extensions = [
-    Extension(
-        'embree',
-        ['embree.pyx'],
-        libraries=['embree3'],
-        include_dirs=include,
-        library_dirs=library
-    )
-]
 
-with open(os.path.join(cwd, 'README.md'), 'r') as f:
-    long_description = f.read()
-with open(os.path.join(cwd, 'embree.pyx'), 'r') as f:
-    # use eval to get a clean string of version from file
-    __version__ = eval(
-        next(line for line in f if
-             line.startswith('__version__')).split('=')[-1])
+class CustomBuildExt(build_ext):
+    def run(self):
+        if os.name == "nt":
+            subprocess.run([r".\ci\embree3_windows.bat"], check=True)
+            build_ext.run(self)
+            # DLLファイルをコピーして、whl を介してインストールフォルダに導入する。
+            for dll in ["./embree3/bin/embree3.dll", "./embree3/bin/tbb12.dll"]:
+                shutil.copy(dll, os.path.join(self.build_lib, "embreepy"))
+        elif os.name == "posix":
+            subprocess.run(["./ci/embree3_linux.sh"], check=True)
+            build_ext.run(self)
+            for lib in ["./embree3/lib/libembree3.so.3", "./embree3/lib/libtbb.so.12"]:
+                shutil.copy2(
+                    lib, os.path.join(self.build_lib, "embreepy"), follow_symlinks=True
+                )
+
 
 setup(
-    name='embree',
-    version=__version__,
-    description='Ray queries on triangular meshes.',
-    long_description=long_description,
-    long_description_content_type='text/markdown',
-    install_requires=['numpy'],
-    packages=find_packages(),
+    name="embreepy",
     ext_modules=cythonize(extensions),
-    zip_safe=False
+    cmdclass={"build_ext": CustomBuildExt},
+    package_data={"embreepy": ["*.pyd", "*.dll", "libs"]},
+    package_dir={"": "src"},
+    packages=find_packages(),
+    zip_safe=False,
 )
