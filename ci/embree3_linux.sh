@@ -12,9 +12,9 @@ fi
 
 embree3="./embree3"
 if [ ! -d "$embree3" ]; then
-    curl -L -o embree3.tar.gz https://github.com/RenderKit/embree/releases/ download/v3.13.5/embree-3.13.5.x86_64.linux.tar.gz
+    curl -L -o embree3.tar.gz https://github.com/RenderKit/embree/releases/download/v3.13.5/embree-3.13.5.x86_64.linux.tar.gz
     tar xzvf embree3.tar.gz
-    mv embree-3.13.5.x86_64.linux / embree3
+    mv embree-3.13.5.x86_64.linux ./embree3
     rm embree3.tar.gz
 fi
 
