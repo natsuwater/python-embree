@@ -28,7 +28,7 @@ class CustomBuildExt(build_ext):
         if os.name == "nt":
             subprocess.run([r".\ci\embree3_windows.bat"], check=True)
             build_ext.run(self)
-            # DLLファイルをコピーして、whl を介してインストールフォルダに導入する。
+            # copy DLLs into build_lib, those files goes into wheel packge
             for dll in ["./embree3/bin/embree3.dll", "./embree3/bin/tbb12.dll"]:
                 shutil.copy(dll, os.path.join(self.build_lib, "embreepy"))
         elif os.name == "posix":
