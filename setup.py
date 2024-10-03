@@ -18,7 +18,7 @@ extension_param.update(
 )
 
 if os.name == "posix":
-    extension_param.update(extra_link_args=["-WL,-rpath,$ORIGIN"])
+    extension_param.update(extra_link_args=["-Wl,-rpath,$ORIGIN"])
 
 extensions = [Extension(**extension_param)]
 

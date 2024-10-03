@@ -23,20 +23,37 @@ or feel free to wrap it on your own and submit a pull request.*
 
 ### Windows
 
-If you install Embree using the MSI from Embree's website, the Embree
-binaries, headers, and libraries will all be installed to `C:\Program
-Files\Intel\Embree3` by default.
+1. Clone the repositry to your local windows machine. `git clone`
 
-As an example, to compile using MSYS2 from the MinGW 64-bit console,
-after `cd`ing to the root directory of this repository, it should be
-possible to run:
+2. pip install on your local machine. (Requires Cython and `CL` command of Visual studio.)
 
 ```
-$ python setup.py build_ext -I/c/Program\ Files/Intel/Embree3/include -L /c/Program\ Files/Intel/Embree3/lib
-$ python setup.py install
+cd python-embree
+pip install .
 ```
 
-to successfully compile and install python-embree.
+The binary package of embree 3.13.5 will be downloaded into your working directory `.\embree3`.
+Then a wheel package with 'embreepy/embree.cp312-win_amd64.pyd', 'embreepy/embree3.dll', 'embreepy/tbb12.dll'
+is generated under `dist` directory and installed.
+
+Alternatively, you can build a wheel package with
+`python -m build`
+after you pip install `build` to your python (or python venv).
+
+### Linux
+
+1. Clone the repositry to your local windows machine. `git clone`
+
+2. pip install on your local machine.
+
+```
+cd python-embree
+pip install .
+```
+
+The binary package of embree 3.13.5 will be downloaded into your working directory `.\embree3`.
+Then a wheel package with 'embreepy/embree.cpython-312-x86_64-linux-gnu.so', 'embreepy/libembree3.so.3', and 'embreepy/libtbb.so.12' is generated.
+Note that linker option "-Wl,-rpath,$ORIGIN" given in `setup.py` works fine, you don't have to set LD_LIBRARY_PATH to `libembree3.so` and `libtbb.so.12`
 
 ## Tips and tricks
 
