@@ -3,7 +3,7 @@ import unittest
 
 class BasicTest(unittest.TestCase):
     def test_import(self):
-        from embreepy import embree
+        from embree_y import embree
 
 
 if __name__ == "__main__":

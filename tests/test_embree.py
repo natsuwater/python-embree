@@ -3,7 +3,7 @@ import unittest
 
 import numpy as np
 
-from embreepy import embree
+from embree_y import embree
 
 cwd = os.path.expanduser(os.path.abspath(os.path.dirname(__file__)))
 
