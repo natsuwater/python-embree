@@ -2,15 +2,17 @@ import os
 import shutil
 import subprocess
 
-from Cython.Build import cythonize
-from Cython.Distutils import build_ext
 from setuptools import find_packages, setup
 from setuptools.extension import Extension
 
+from Cython.Build import cythonize
+from Cython.Distutils import build_ext
+
+
 extension_param = dict()
 extension_param.update(
-    name="embreepy.embree",
-    sources=["./src/embreepy/embree.pyx"],
+    name="embree_y.embree",
+    sources=["./src/embree_y/embree.pyx"],
     libraries=["embree3"],
     include_dirs=["./embree3/include"],
     library_dirs=["./embree3/lib"],
@@ -30,7 +32,7 @@ class CustomBuildExt(build_ext):
             build_ext.run(self)
             # DLLファイルをコピーして、whl を介してインストールフォルダに導入する。
             for dll in ["./embree3/bin/embree3.dll", "./embree3/bin/tbb12.dll"]:
-                shutil.copy(dll, os.path.join(self.build_lib, "embreepy"))
+                shutil.copy(dll, os.path.join(self.build_lib, "embree_y"))
         elif os.name == "posix":
             subprocess.run(["./ci/embree3_linux.sh"], check=True)
             build_ext.run(self)
@@ -41,10 +43,10 @@ class CustomBuildExt(build_ext):
 
 
 setup(
-    name="embreepy",
+    name="embree_y",
     ext_modules=cythonize(extensions),
     cmdclass={"build_ext": CustomBuildExt},
-    package_data={"embreepy": ["*.pyd", "*.dll", "libs"]},
+    package_data={"embree_y": ["*.pyd", "*.dll", "libs"]},
     package_dir={"": "src"},
     packages=find_packages(),
     zip_safe=False,
