@@ -3,7 +3,7 @@ requires = ["setuptools>=75.1.0", "Cython>=3.0.11"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "embreepy"
+name = "embree_y"
 version = "3.13.5"
 dependencies = ["numpy==1.26.4"]
 description = "Python binding for Intel's Embree ray engine ver.3"
