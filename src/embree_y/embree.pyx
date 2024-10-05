@@ -9,7 +9,7 @@ from enum import Enum
 from libc.stdio cimport printf
 from libc.stdlib cimport free
 
-__version__ = '3.15.5'
+__version__ = '3.13.5'
 
 # In this section, we define an aligned memory allocation function,
 # "aligned_alloc". This should be used throughout this .pyx file to
