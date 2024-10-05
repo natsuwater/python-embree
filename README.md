@@ -25,7 +25,7 @@ or feel free to wrap it on your own and submit a pull request.*
 
 1. Clone the repositry to your local windows machine. `git clone`
 
-2. pip install on your local machine. (Requires Cython and `CL` command of Visual studio.)
+2. pip install on your local machine. (Requires Cython and `CL` command of Visual studio installed.)
 
 ```
 cd python-embree
@@ -33,17 +33,18 @@ pip install .
 ```
 
 The binary package of embree 3.13.5 will be downloaded into your working directory `.\embree3`.
-Then a wheel package with 'embreepy/embree.cp312-win_amd64.pyd', 'embreepy/embree3.dll', 'embreepy/tbb12.dll'
+Then a wheel package with 'embree_y/embree.cp312-win_amd64.pyd', 'embree_y/embree3.dll', 'embree_y/tbb12.dll'
 is generated under `dist` directory and installed.
 
 Alternatively, you can build a wheel package with
-`python -m build`
+`python -m build --wheel`
 after you pip install `build` to your python (or python venv).
 
 ### Linux
 
 1. Clone the repositry to your local windows machine. `git clone`
 
+2.
 2. pip install on your local machine.
 
 ```
@@ -52,8 +53,8 @@ pip install .
 ```
 
 The binary package of embree 3.13.5 will be downloaded into your working directory `.\embree3`.
-Then a wheel package with 'embreepy/embree.cpython-312-x86_64-linux-gnu.so', 'embreepy/libembree3.so.3', and 'embreepy/libtbb.so.12' is generated.
-Note that linker option "-Wl,-rpath,$ORIGIN" given in `setup.py` works fine, you don't have to set LD_LIBRARY_PATH to `libembree3.so` and `libtbb.so.12`
+Then a wheel package with 'embree_y/embree.cpython-312-x86_64-linux-gnu.so', 'embree_y/libembree3.so.3', and 'embree_y/libtbb.so.12' is generated.
+Note that linker option "-Wl,-rpath,$ORIGIN" is given in `setup.py`. You don't need to set LD_LIBRARY_PATH to `libembree3.so` and `libtbb.so.12`
 
 ## Tips and tricks
 
