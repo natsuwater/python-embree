@@ -38,9 +38,8 @@ class CustomBuildExt(build_ext):
             build_ext.run(self)
             for lib in ["./embree3/lib/libembree3.so.3", "./embree3/lib/libtbb.so.12"]:
                 shutil.copy2(
-                    lib, os.path.join(self.build_lib, "embreepy"), follow_symlinks=True
+                    lib, os.path.join(self.build_lib, "embree_y"), follow_symlinks=True
                 )
-
 
 setup(
     name="embree_y",
