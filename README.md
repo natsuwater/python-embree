@@ -44,7 +44,6 @@ after you pip install `build` to your python (or python venv).
 
 1. Clone the repositry to your local windows machine. `git clone`
 
-2.
 2. pip install on your local machine.
 
 ```
